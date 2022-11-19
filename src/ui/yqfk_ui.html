@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>疫情防控自动打卡数据录入</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="css/yqfk_css.css" rel="stylesheet" />
+    <link href="css/base.css" rel="stylesheet" />
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <section>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class=" col-md-6 d-flex flex-column align-items-center justify-content-center">
+                            <div class="d-flex justify-content-center py-4">
+                                <a href="#" class="logo d-flex align-items-center w-auto">
+                                </a>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="pt-4 ">
+                                        <h5 class="card-title text-center pb-0 fs-4">dgut 疫情防控自动打卡系统数据录入</h5>
+                                        <p class="text-center small remark">使用前阅读：</p>
+                                        <p class="text-center small remark">1. 该自动打卡系统仅用于dgut疫情打卡系统, 
+                                            <span style="color: red;">属私人系统</span>,请慎重考虑后再选择是否使用,
+                                            <span style="color: red;">本人不承担因使用自动打卡造成的后果！</span> 
+                                        </p>
+                                        <p class="text-center small remark">2. 所有录入的密码已经过多重加密(如RSA等加密),
+                                            <span style="color: red;">作者本人保证不主动解密数据, 更不会做出泄漏数据的行为</span>
+                                        </p>
+                                        <p class="text-center small remark">3. 添加数据时接入了学校中央认证, 请输入正确的账号密码, 
+                                            错误五次将会暂停登录, <span style="color: red;">删除已有账号时, 请输入修改后的密码</span>
+                                        </p>
+                                    </div>
+                                    <div class="row g-3 needs-validation" id="form_info">
+                                        <div class="col-12">
+                                            <label for="Username" class="form-label">Dgut中央认证 用户名: </label>
+                                            <div class="input-group has-validation">
+                                                <input type="text" name="username" class="form-control" id="id_username"
+                                                    required>
+                                                <div class="invalid-feedback">Please enter your username.</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="yourPassword" class="form-label">Dgut中央认证 密码: </label>
+                                            <input type="password" name="password" class="form-control" id="id_password"
+                                                required>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100" type="submit" id="sumbit_info"
+                                                onclick="sumbit()">录入</button>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100" type="submit" id="sumbit_info"
+                                                onclick="delete_()">删除</button>
+                                        </div>
+
+                                    </div>
+                                    <p class="text-center small" id="anthor">
+                                        <span>author: chovychan</span>
+                                        <a href="https://gitee.com/chovychan/go_dgut_yqdk" target="_blank"> github地址</a>
+                                        </br>
+                                        <span>email:</span>
+                                        <a href="mailto:chovychan@outlook.com"> chovychan@outlook.com</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+</body>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+</script>
+<script type="application/javascript">
+    //发送表单ajax请求
+    function sumbit() {
+        let username = document.getElementById('id_username').value;
+        let password = document.getElementById('id_password').value;
+        $.ajax({
+            url: "http://1.12.44.120:4398/insert",
+            type: "POST",
+            data: JSON.stringify({
+                "username": username,
+                "password": password
+            }),
+            contentType: "application/json",  //缺失会出现URL编码，无法转成json对象
+            success: function (result) {
+                console.log("data is :" + result)
+                alert(result.message)
+            }
+        });
+    }
+
+    function delete_() {
+        let username = document.getElementById('id_username').value;
+        let password = document.getElementById('id_password').value;
+        $.ajax({
+            url: "http://keyvon.club:4398/delete",
+            type: "POST",
+            data: JSON.stringify({
+                "username": username,
+                "password": password
+            }),
+            contentType: "application/json",  //缺失会出现URL编码，无法转成json对象
+            success: function (result) {
+                console.log("data is :" + result)
+                alert(result.message)
+            }
+        });
+    }
+</script>
+
+</html>
